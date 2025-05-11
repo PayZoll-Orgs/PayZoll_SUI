@@ -12,6 +12,7 @@ export interface AddressBookEntry {
     company: string;
     nickname: string;
     walletAddress: string;
+    email?: string;
     createdAt: string;
     updatedAt: string;
 }
@@ -42,26 +43,29 @@ export const searchAddresses = async (query: string): Promise<AddressBookRespons
 // Add a new address to the address book
 export const addAddress = async (
     nickname: string,
-    walletAddress: string
+    walletAddress: string,
+    email?: string
 ): Promise<SingleAddressResponse> => {
     const response = await axiosClient.post(ENDPOINTS.ADDRESS_BOOK, {
         nickname,
-        walletAddress
+        walletAddress,
+        email
     });
     return response.data;
 };
 
 // Update an existing address
 export const updateAddress = async (
-    currentNickname: string,
-    data: {
+    nickname: string,
+    updateData: {
         walletAddress?: string;
         newNickname?: string;
+        email?: string;
     }
 ): Promise<SingleAddressResponse> => {
     const response = await axiosClient.patch(
-        `${ENDPOINTS.ADDRESS_BOOK}/${encodeURIComponent(currentNickname)}`,
-        data
+        `${ENDPOINTS.ADDRESS_BOOK}/${encodeURIComponent(nickname)}`,
+        updateData
     );
     return response.data;
 };
@@ -95,4 +99,12 @@ export const resolveRecipient = async (recipientInput: string): Promise<string> 
     } catch (error) {
         throw new Error(`Could not resolve nickname "${nickname}" to a wallet address`);
     }
+};
+
+// Add a contact from an invoice
+export const addContactFromInvoice = async (invoiceId: string): Promise<SingleAddressResponse> => {
+    const response = await axiosClient.post(`${ENDPOINTS.ADDRESS_BOOK}/from-invoice`, {
+        invoiceId
+    });
+    return response.data;
 };
