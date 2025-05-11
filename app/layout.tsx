@@ -34,6 +34,9 @@ export default function RootLayout({
           <Toaster
             position="top-right"
             reverseOrder={false}
+            toastOptions={{
+              duration: 5000,
+            }}
           />
           {children}
         </AuthProvider>
