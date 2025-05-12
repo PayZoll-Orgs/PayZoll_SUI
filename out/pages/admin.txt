@@ -1,0 +1,26 @@
+1:"$Sreact.fragment"
+2:I[35196,["844","static/chunks/ee560e2c-59f2d8e6b548dfa5.js","4134","static/chunks/4134-bab579e2058d9fea.js","3464","static/chunks/3464-a69ced270b6ece88.js","2901","static/chunks/2901-23b4fa97d4bb6a4e.js","5196","static/chunks/5196-d5062d067c330c29.js","7177","static/chunks/app/layout-01995d0f665c119a.js"],"AuthProvider"]
+3:I[31530,["844","static/chunks/ee560e2c-59f2d8e6b548dfa5.js","4134","static/chunks/4134-bab579e2058d9fea.js","3464","static/chunks/3464-a69ced270b6ece88.js","2901","static/chunks/2901-23b4fa97d4bb6a4e.js","5196","static/chunks/5196-d5062d067c330c29.js","7177","static/chunks/app/layout-01995d0f665c119a.js"],"Toaster"]
+4:I[87555,[],""]
+5:I[31295,[],""]
+6:I[11024,["4345","static/chunks/app/not-found-3b1f4992dc14d89b.js"],"default"]
+7:I[87704,["4134","static/chunks/4134-bab579e2058d9fea.js","3464","static/chunks/3464-a69ced270b6ece88.js","3981","static/chunks/app/pages/admin/page-198aab0494b9167c.js"],"default"]
+8:I[51918,["4134","static/chunks/4134-bab579e2058d9fea.js","3464","static/chunks/3464-a69ced270b6ece88.js","3981","static/chunks/app/pages/admin/page-198aab0494b9167c.js"],"default"]
+9:I[59665,[],"MetadataBoundary"]
+b:I[59665,[],"OutletBoundary"]
+e:I[74911,[],"AsyncMetadataOutlet"]
+10:I[59665,[],"ViewportBoundary"]
+12:I[26614,[],""]
+:HL["/_next/static/media/569ce4b8f30dc480-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/93f479601ee12b01-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/css/f30152c0704fba31.css","style"]
+:HL["/_next/static/css/caf686aef6830aba.css","style"]
+0:{"P":null,"b":"QX7Rv7C3W0q5g8nChRGUJ","p":"","c":["","pages","admin"],"i":false,"f":[[["",{"children":["pages",{"children":["admin",{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/f30152c0704fba31.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/css/caf686aef6830aba.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":["$","body",null,{"className":"__variable_5cfdac __variable_9a8899 antialiased dark:bg-black vsc-initialized","children":["$","$L2",null,{"children":[["$","$L3",null,{"position":"top-right","reverseOrder":false}],["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","$L6",null,{}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]]}]}]}]]}],{"children":["pages",["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["admin",["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["__PAGE__",["$","$1","c",{"children":[["$","div",null,{"className":"flex flex-col w-full h-full","children":[["$","$L7",null,{}],["$","$L8",null,{}]]}],["$","$L9",null,{"children":"$La"}],null,["$","$Lb",null,{"children":["$Lc","$Ld",["$","$Le",null,{"promise":"$@f"}]]}]]}],{},null,false]},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,["$","$1","sapWoKJGQZUzPupJEVhDw",{"children":[["$","$L10",null,{"children":"$L11"}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],null]}],false]],"m":"$undefined","G":["$12","$undefined"],"s":false,"S":true}
+13:"$Sreact.suspense"
+14:I[74911,[],"AsyncMetadata"]
+a:["$","$13",null,{"fallback":null,"children":["$","$L14",null,{"promise":"$@15"}]}]
+d:null
+11:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+c:null
+15:{"metadata":[["$","title","0",{"children":"PayZoll"}],["$","meta","1",{"name":"description","content":"Web3 Finance Infrastructure"}],["$","link","2",{"rel":"icon","href":"/favicon.ico","type":"image/x-icon","sizes":"16x16"}]],"error":null,"digest":"$undefined"}
+f:{"metadata":"$15:metadata","error":null,"digest":"$undefined"}
