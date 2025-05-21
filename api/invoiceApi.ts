@@ -1,4 +1,5 @@
 import axiosClient from './axiosClient';
+import { walrusApi } from './walrusApi';
 
 // Types
 export interface Invoice {
@@ -43,6 +44,18 @@ export const createInvoice = async (invoiceData: {
     walletAddress?: string;
 }): Promise<SingleInvoiceResponse> => {
     const response = await axiosClient.post('/invoices', invoiceData);
+
+    // Create blockchain audit record
+    await walrusApi.storeAuditRecord({
+        recordType: 'invoice',
+        recordId: response.data.data._id,
+        timestamp: Date.now(),
+        walletAddresses: [invoiceData.walletAddress || ''],
+        amount: invoiceData.amount,
+        chain: 'SUI',
+        status: 'created'
+    });
+
     return response.data;
 };
 
@@ -56,6 +69,22 @@ export const updateInvoiceStatus = async (
         paymentStatus,
         transactionHash
     });
+
+    // First get the invoice to have all needed data
+    const invoice = response.data.data;
+
+    // Create blockchain audit record for status update
+    await walrusApi.storeAuditRecord({
+        recordType: 'invoice',
+        recordId: invoiceId,
+        timestamp: Date.now(),
+        walletAddresses: [invoice.walletAddress],
+        amount: invoice.amount,
+        chain: 'SUI',
+        status: paymentStatus,
+        transactionHash
+    });
+
     return response.data;
 };
 

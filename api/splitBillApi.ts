@@ -1,4 +1,5 @@
 import axiosClient from './axiosClient';
+import { walrusApi } from './walrusApi';
 
 // Types
 export interface SplitParticipant {
@@ -52,6 +53,23 @@ export const createSplitBill = async (
         initiatorWalletAddress,
         participants
     });
+
+    const splitBill = response.data.data;
+
+    // Create blockchain audit record
+    await walrusApi.storeAuditRecord({
+        recordType: 'splitBill',
+        recordId: splitBill._id,
+        timestamp: Date.now(),
+        walletAddresses: [
+            initiatorWalletAddress,
+            ...splitBill.participants.map((p: SplitParticipant) => p.walletAddress)
+        ],
+        amount: splitBill.totalAmount,
+        chain: 'SUI',
+        status: 'created'
+    });
+
     return response.data;
 };
 
@@ -88,5 +106,26 @@ export const updateParticipantPayment = async (
     const response = await axiosClient.patch(`/split-bill/${splitId}/participant/${participantEmail}`, {
         transactionHash
     });
+
+    // Get the split bill details with the updated participant
+    const splitBill = response.data.data;
+    const participant = splitBill.participants.find(
+        (p: SplitParticipant) => p.email === participantEmail
+    );
+
+    // Create blockchain audit record for the payment
+    if (participant) {
+        await walrusApi.storeAuditRecord({
+            recordType: 'splitBill',
+            recordId: splitBill._id,
+            timestamp: Date.now(),
+            walletAddresses: [participant.walletAddress],
+            amount: participant.amount,
+            chain: 'SUI',
+            status: 'participant_paid',
+            transactionHash
+        });
+    }
+
     return response.data;
 };
