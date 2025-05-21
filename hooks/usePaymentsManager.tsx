@@ -10,6 +10,7 @@ import {
 } from '@mysten/dapp-kit';
 import { useNetwork } from '@/context/networkContext';
 import { SuiToken } from '@/lib/sui-tokens';
+import { walrusApi } from '@/api/walrusApi'; // Import the walrusApi
 
 // Constants for the contract - make these network-aware
 const CONTRACT_ADDRESSES = {
@@ -54,6 +55,133 @@ export function usePaymentsManager(selectedToken: SuiToken | undefined) {
             toast.error(`Failed to fetch your ${selectedToken?.symbol || 'SUI'} coins`);
         }
     }, [currentAccount, selectedToken, suiClient]);
+
+    // Execute payment action (claim or reimburse)
+    const executePaymentAction = async (paymentObjectId: string, action: 'claim' | 'reimburse') => {
+        if (!paymentObjectId) {
+            setResultMessage({
+                type: 'error',
+                message: 'Please enter a payment object ID'
+            });
+            return;
+        }
+
+        // Check if we know this payment isn't actionable
+        const payment = payments.find(p => p.parsedJson.payment_object_id === paymentObjectId);
+        if (payment && payment.parsedJson.statusInfo?.status !== 'SENT') {
+            setResultMessage({
+                type: 'error',
+                message: `This payment cannot be ${action}ed because it has status: ${payment.parsedJson.statusInfo?.status}`
+            });
+            toast.error(`Payment is not in a ${action}able state`);
+            return;
+        }
+
+        setIsLoading(true);
+        setResultMessage({ type: 'info', message: 'Preparing transaction...' });
+
+        try {
+            const tx = new Transaction();
+            tx.setGasBudget(5000000); // 5M gas units
+
+            // Call the contract's function based on action type
+            tx.moveCall({
+                target: `${PACKAGE_ID}::${MODULE_NAME}::${action}`,
+                arguments: [tx.object(paymentObjectId)],
+            });
+
+            // Execute the transaction
+            signAndExecuteTransaction(
+                { transaction: tx },
+                {
+                    onSuccess: async (result) => {
+                        // Transaction was sent, but we need to verify its status
+                        setResultMessage({ type: 'info', message: 'Transaction sent. Checking status...' });
+
+                        try {
+                            // Wait for transaction to be processed
+                            await new Promise(resolve => setTimeout(resolve, 2000));
+
+                            // Get the transaction status
+                            const txBlock = await suiClient.getTransactionBlock({
+                                digest: result.digest,
+                                options: { showEffects: true }
+                            });
+
+                            const isSuccess = txBlock.effects?.status?.status === 'success';
+
+                            if (isSuccess) {
+                                const actionPastTense = action === 'claim' ? 'claimed' : 'reimbursed';
+                                setResultMessage({
+                                    type: 'success',
+                                    message: `Payment ${actionPastTense}! Transaction digest: ${result.digest}`
+                                });
+                                toast.success(`Payment ${actionPastTense} successfully!`);
+                                
+                                // Find the payment details in our existing payments array
+                                const payment = payments.find(p => p.parsedJson.payment_object_id === paymentObjectId);
+                                
+                                if (payment) {
+                                    // Store the payment action record in Walrus
+                                    try {
+                                        await walrusApi.storePaymentRecord(
+                                            action,
+                                            payment.parsedJson.payment_id || 'unknown',
+                                            paymentObjectId,
+                                            payment.parsedJson.from,
+                                            payment.parsedJson.to,
+                                            Number(payment.parsedJson.amount) / 1_000_000_000, // Convert MIST to SUI
+                                            result.digest
+                                        );
+                                        console.log(`Payment ${action} record stored in blockchain`);
+                                    } catch (walrusError) {
+                                        console.error(`Failed to store payment ${action} record:`, walrusError);
+                                    }
+                                }
+
+                                // Refresh data
+                                fetchPayments();
+                                fetchUserCoins();
+                            } else {
+                                const errorMsg = txBlock.effects?.status?.error || 'Transaction execution failed';
+                                const actionNoun = action === 'claim' ? 'Claim' : 'Reimbursement';
+                                setResultMessage({
+                                    type: 'error',
+                                    message: `${actionNoun} failed: ${errorMsg}`
+                                });
+                                toast.error(`Failed to ${action} payment: ${errorMsg}`);
+                            }
+                        } catch (statusError:any) {
+                            console.error('Error checking transaction status:', statusError);
+                            setResultMessage({
+                                type: 'error',
+                                message: `Unable to verify transaction status: ${statusError.message}`
+                            });
+                        } finally {
+                            setIsLoading(false);
+                        }
+                    },
+                    onError: (error) => {
+                        console.error('Transaction submission failed:', error);
+                        setResultMessage({
+                            type: 'error',
+                            message: `Failed to submit transaction: ${error.message}`
+                        });
+                        toast.error(`Transaction error: ${error.message}`);
+                        setIsLoading(false);
+                    }
+                }
+            );
+        } catch (error:any) {
+            console.error('Transaction preparation failed:', error);
+            setResultMessage({
+                type: 'error',
+                message: `Failed to prepare transaction: ${error.message}`
+            });
+            toast.error(`Error: ${error.message}`);
+            setIsLoading(false);
+        }
+    };
 
     const fetchPayments = useCallback(async () => {
         if (!currentAccount) return;
@@ -120,6 +248,32 @@ export function usePaymentsManager(selectedToken: SuiToken | undefined) {
                         timestamp: new Date(event.timestampMs ?? Date.now()).toLocaleString()
                     };
 
+                    // Try to update the payment record in Walrus if this is a new payment
+                    if (fields.payment_id && fields.payment_object_id) {
+                        const paymentKey = `payment_sent_${fields.payment_id}`;
+                        
+                        // Load recorded payments from localStorage
+                        const existingPayments = localStorage.getItem('walrus_recorded_payments') || '{}';
+                        const recordedPayments = JSON.parse(existingPayments);
+                        
+                        // Check if we've already recorded this payment but need to update its object ID
+                        if (recordedPayments[paymentKey] && !recordedPayments[`${paymentKey}_with_object_id`]) {
+                            try {
+                                // Try to update payment object ID in Walrus
+                                walrusApi.updatePaymentObjectId(
+                                    fields.payment_id,
+                                    fields.payment_object_id
+                                );
+                                
+                                // Mark this payment as fully recorded with object ID
+                                recordedPayments[`${paymentKey}_with_object_id`] = true;
+                                localStorage.setItem('walrus_recorded_payments', JSON.stringify(recordedPayments));
+                            } catch (error) {
+                                console.warn('Failed to update payment object ID in blockchain:', error);
+                            }
+                        }
+                    }
+
                     return {
                         ...event,
                         parsedJson: {
@@ -137,13 +291,6 @@ export function usePaymentsManager(selectedToken: SuiToken | undefined) {
             setIsLoading(false);
         }
     }, [currentAccount, suiClient, PACKAGE_ID]);
-
-    useEffect(() => {
-        if (currentAccount) {
-            fetchUserCoins();
-            fetchPayments();
-        }
-    }, [currentAccount, currentNetwork, selectedToken, fetchUserCoins, fetchPayments]);
 
     const sendPayment = async (paymentId: string, payeeAddress: string, amount: string) => {
         setIsLoading(true);
@@ -250,6 +397,37 @@ export function usePaymentsManager(selectedToken: SuiToken | undefined) {
                                 });
                                 toast.success('Payment sent successfully!');
 
+                                // Store the payment record in Walrus blockchain storage
+                                try {
+                                    const paymentKey = `payment_sent_${paymentId}`;
+                                    
+                                    // Store payment key in localStorage to track which payments we've already recorded
+                                    const existingPayments = localStorage.getItem('walrus_recorded_payments') || '{}';
+                                    const recordedPayments = JSON.parse(existingPayments);
+                                    
+                                    // Only store if we haven't already recorded this payment
+                                    if (!recordedPayments[paymentKey]) {
+                                        await walrusApi.storePaymentRecord(
+                                            'send',
+                                            paymentId,
+                                            '', // Will be updated later
+                                            currentAccount?.address || '',
+                                            payeeAddress,
+                                            parseFloat(amount),
+                                            result.digest
+                                        );
+                                        console.log('Payment record stored in blockchain');
+                                        
+                                        // Mark this payment as recorded
+                                        recordedPayments[paymentKey] = true;
+                                        localStorage.setItem('walrus_recorded_payments', JSON.stringify(recordedPayments));
+                                    } else {
+                                        console.log('Payment already recorded in blockchain, skipping duplicate');
+                                    }
+                                } catch (walrusError) {
+                                    console.error('Failed to store payment record:', walrusError);
+                                }
+
                                 // Refresh data
                                 fetchPayments();
                                 fetchUserCoins();
@@ -293,110 +471,15 @@ export function usePaymentsManager(selectedToken: SuiToken | undefined) {
         }
     };
 
-    const executePaymentAction = async (paymentObjectId: string, action: 'claim' | 'reimburse') => {
-        if (!paymentObjectId) {
-            setResultMessage({
-                type: 'error',
-                message: 'Please enter a payment object ID'
-            });
-            return;
+    // Track processed payments to avoid duplicates
+    const [previouslyProcessedPayments] = useState(new Set<string>());
+
+    useEffect(() => {
+        if (currentAccount) {
+            fetchUserCoins();
+            fetchPayments();
         }
-
-        // Check if we know this payment isn't actionable
-        const payment = payments.find(p => p.parsedJson.payment_object_id === paymentObjectId);
-        if (payment && payment.parsedJson.statusInfo?.status !== 'SENT') {
-            setResultMessage({
-                type: 'error',
-                message: `This payment cannot be ${action}ed because it has status: ${payment.parsedJson.statusInfo?.status}`
-            });
-            toast.error(`Payment is not in a ${action}able state`);
-            return;
-        }
-
-        setIsLoading(true);
-        setResultMessage({ type: 'info', message: 'Preparing transaction...' });
-
-        try {
-            const tx = new Transaction();
-            tx.setGasBudget(5000000); // 5M gas units
-
-            // Call the contract's function based on action type
-            tx.moveCall({
-                target: `${PACKAGE_ID}::${MODULE_NAME}::${action}`,
-                arguments: [tx.object(paymentObjectId)],
-            });
-
-            // Execute the transaction
-            signAndExecuteTransaction(
-                { transaction: tx },
-                {
-                    onSuccess: async (result) => {
-                        // Transaction was sent, but we need to verify its status
-                        setResultMessage({ type: 'info', message: 'Transaction sent. Checking status...' });
-
-                        try {
-                            // Wait for transaction to be processed
-                            await new Promise(resolve => setTimeout(resolve, 2000));
-
-                            // Get the transaction status
-                            const txBlock = await suiClient.getTransactionBlock({
-                                digest: result.digest,
-                                options: { showEffects: true }
-                            });
-
-                            const isSuccess = txBlock.effects?.status?.status === 'success';
-
-                            if (isSuccess) {
-                                const actionPastTense = action === 'claim' ? 'claimed' : 'reimbursed';
-                                setResultMessage({
-                                    type: 'success',
-                                    message: `Payment ${actionPastTense}! Transaction digest: ${result.digest}`
-                                });
-                                toast.success(`Payment ${actionPastTense} successfully!`);
-
-                                // Refresh data
-                                fetchPayments();
-                                fetchUserCoins();
-                            } else {
-                                const errorMsg = txBlock.effects?.status?.error || 'Transaction execution failed';
-                                const actionNoun = action === 'claim' ? 'Claim' : 'Reimbursement';
-                                setResultMessage({
-                                    type: 'error',
-                                    message: `${actionNoun} failed: ${errorMsg}`
-                                });
-                                toast.error(`Failed to ${action} payment: ${errorMsg}`);
-                            }
-                        } catch (statusError:any) {
-                            console.error('Error checking transaction status:', statusError);
-                            setResultMessage({
-                                type: 'error',
-                                message: `Unable to verify transaction status: ${statusError.message}`
-                            });
-                        } finally {
-                            setIsLoading(false);
-                        }
-                    },
-                    onError: (error) => {
-                        console.error('Transaction submission failed:', error);
-                        setResultMessage({
-                            type: 'error',
-                            message: `Failed to submit transaction: ${error.message}`
-                        });
-                        toast.error(`Transaction error: ${error.message}`);
-                        setIsLoading(false);
-                    }
-                }
-            );
-        } catch (error:any) {
-            console.error('Transaction preparation failed:', error);
-            setResultMessage({
-                type: 'error',
-                message: `Failed to prepare transaction: ${error.message}`
-            });
-            toast.error(`Error: ${error.message}`);
-            setIsLoading(false);
-        }
-    };
+    }, [currentAccount, currentNetwork, selectedToken, fetchUserCoins, fetchPayments]);
 
     return {
         currentAccount,
