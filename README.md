@@ -128,7 +128,7 @@ With these SUI-specific enhancements, PayZoll has transformed into a true native
 
 ## Development Journey
 
-After extensive evaluation of blockchain ecosystems in early 2024, we strategically selected SUI and Move as our primary development platform. Our technical assessment compared EVM-based solutions (Solidity), Rust frameworks, and Move language, with SUI emerging as the clear winner for our financial infrastructure needs
+After extensive evaluation of blockchain ecosystems in early 2024, we strategically selected SUI and Move as our primary development platform. Our technical assessment compared EVM-based solutions (Solidity), Rust frameworks, and Move language, with SUI emerging as the clear winner for our financial infrastructure needs.
 
 Key factors that positioned SUI as optimal:
 - **Object-centric model**: Perfect alignment with financial assets and payment flows
