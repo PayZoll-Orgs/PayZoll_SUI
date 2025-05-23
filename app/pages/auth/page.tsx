@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 import { useSearchParams } from 'next/navigation';
 import Head from "next/head";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -21,11 +21,29 @@ type AuthStep = "register" | "login" | "forgotPassword" | "resetPasswordOtp";
 type ForgotPasswordFormData = { email: string };
 type ResetPasswordFormData = { otp: string; password: string; confirmPassword: string };
 
-
-const AuthPage: React.FC = () => {
+// Create a new component to handle search params
+const SearchParamsProvider = ({
+    onModeChange
+}: {
+    onModeChange: (mode: string) => void
+}) => {
     const searchParams = useSearchParams();
     const mode = searchParams.get('mode') || 'default';
 
+    // Effect to pass the mode up to parent when it changes
+    useEffect(() => {
+        onModeChange(mode);
+    }, [mode, onModeChange]);
+
+    return null; // This component doesn't render anything
+};
+
+const AuthPage: React.FC = () => {
+    // Remove direct useSearchParams usage
+    // const searchParams = useSearchParams();
+    // const mode = searchParams.get('mode') || 'default';
+
+    const [mode, setMode] = useState<string>('default');
     const [authStep, setAuthStep] = useState<AuthStep>("register");
     const [isLoading, setIsLoading] = useState(false);
     const [isVideoReady, setIsVideoReady] = useState(false);
@@ -188,6 +206,10 @@ const AuthPage: React.FC = () => {
                     <link rel="preload" href="/auth.mp4" as="video" type="video/mp4" />
                     <title>Loading...</title>
                 </Head>
+                {/* Wrap search params in Suspense even in loading state */}
+                <Suspense fallback={null}>
+                    <SearchParamsProvider onModeChange={setMode} />
+                </Suspense>
                 <video
                     ref={videoRef}
                     src="/auth.mp4"
@@ -209,6 +231,10 @@ const AuthPage: React.FC = () => {
                 <link rel="preload" href="/auth.mp4" as="video" type="video/mp4" />
                 <title>Authentication</title>
             </Head>
+            {/* Wrap only the search params component in Suspense */}
+            <Suspense fallback={null}>
+                <SearchParamsProvider onModeChange={setMode} />
+            </Suspense>
             <BackgroundBeams />
             <div className="absolute z-50 top-4 right-4">
                 <Link href="/">
