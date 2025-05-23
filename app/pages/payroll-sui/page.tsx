@@ -128,6 +128,8 @@ const PayrollSUI: React.FC = () => {
                 const coinData = await suiClient.getBalance({
                     owner: currentAccount.address,
                     coinType: coin.address,
+
+
                 });
 
                 const balance = coinData ?
@@ -369,7 +371,9 @@ const PayrollSUI: React.FC = () => {
 
             // Execute the transaction
             signAndExecuteTransaction(
-                { transaction: tx },
+                {   transaction: tx, 
+                    chain:`sui:${currentNetwork}`,
+                 },
                 {
                     onSuccess: async (result) => {
                         console.log('Transaction result:', result);

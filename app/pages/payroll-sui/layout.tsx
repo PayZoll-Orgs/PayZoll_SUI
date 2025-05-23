@@ -9,9 +9,13 @@ import { AuroraBackground } from '@/components/ui/aurora';
 // Config options for the networks you want to connect to
 const { networkConfig } = createNetworkConfig({
     testnet: { url: getFullnodeUrl('testnet') },
-    mainnet: { url: getFullnodeUrl('mainnet') },
+    mainnet: {
+        url: 'https://fullnode.mainnet.sui.io:443'
+    },
     devnet: { url: getFullnodeUrl('devnet') },
 });
+
+
 const queryClient = new QueryClient();
 
 export default function PaymentsLayout({
@@ -24,7 +28,7 @@ export default function PaymentsLayout({
             <AuroraBackground>
                 <QueryClientProvider client={queryClient}>
                     <NetworkProvider>
-                        <SuiClientProvider networks={networkConfig} defaultNetwork='testnet'>
+                        <SuiClientProvider networks={networkConfig} defaultNetwork='mainnet'>
                             <WalletProvider slushWallet={{
                                 name: 'PayZoll',
                             }}>

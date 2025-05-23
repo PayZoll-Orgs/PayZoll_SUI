@@ -73,7 +73,7 @@ export const suiTokens: Record<string, SuiToken[]> = {
 
 // Bulk Transfer contract addresses
 export const bulkTransferModule = {
-    mainnet: '0x<mainnet_package_id>',
+    mainnet: '0x777cae1b97c072eae268f19012120b979a28430ea12020bd294571cf94303593',
     testnet: '0xfbd9c32958b04d778001a21c2b512b8688e635120f03b22cf3ff6bada43f477c',
 };
 

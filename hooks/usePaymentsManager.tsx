@@ -14,9 +14,9 @@ import { walrusApi } from '@/api/walrusApi'; // Import the walrusApi
 
 // Constants for the contract - make these network-aware
 const CONTRACT_ADDRESSES = {
-    devnet: '0x...',
+    devnet: '0x5a9a6c0db570d796c0369cefc05a184fcd24541afa8986e392e6890a3472832d',
     testnet: '0x5a9a6c0db570d796c0369cefc05a184fcd24541afa8986e392e6890a3472832d',
-    mainnet: '0x...'
+    mainnet: '0xe48836adecb638703f5444b2d26fefb729c967c9455334867c3f25a6edc7e610'
 };
 
 const MODULE_NAME = 'securetransfer';
@@ -28,10 +28,10 @@ export function usePaymentsManager(selectedToken: SuiToken | undefined) {
     const { mutate: signAndExecuteTransaction } = useSignAndExecuteTransaction();
 
     // Network context to determine which contract address to use
-    const { currentNetwork } = useNetwork?.() || { currentNetwork: 'devnet' };
+    const { currentNetwork } = useNetwork?.() || { currentNetwork: 'testnet' };
 
     // Get the correct contract address based on network
-    const PACKAGE_ID = CONTRACT_ADDRESSES[currentNetwork] || CONTRACT_ADDRESSES.devnet;
+    const PACKAGE_ID = CONTRACT_ADDRESSES[currentNetwork] || CONTRACT_ADDRESSES.testnet;
 
     const [coinObjects, setCoinObjects] = useState<any[]>([]);
     const [payments, setPayments] = useState<any[]>([]);
