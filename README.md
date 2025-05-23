@@ -1,22 +1,10 @@
 # Payzoll - Web3 Native Financial Infrastructure
 
-> PayZoll is your all-in-one financial umbrella, seamlessly blending decentralized and centralized rails into a single, turnkey ecosystem. From on-chain smart-contract payroll, streaming payments, and trustless P2P transfers, to fiat on-ramps/off-ramps, KYC/AML compliance, and AI-powered automation, PayZoll empowers businesses and individuals with the full spectrum of Web3-native and traditional finance services—secure, scalable, and future-proof.
+> PayZoll is your all-in-one financial umbrella, seamlessly blending decentralized and centralized rails into a single, turnkey ecosystem. From on-chain smart-contract payroll, streaming payments, and recoverable P2P transfers, bill and invoice payments to splitting payments, to fiat on-ramps/off-ramps, KYC/AML compliance, and AI-powered automation, PayZoll empowers businesses and individuals with the full spectrum of Web3-native and traditional finance services—secure, scalable, and future-proof.
 
 ---
 ![PayZoll](public/PZ-HOME.png)
 
-## 🌍 Vision & Alignment with Pharos
-
-## Pharos Vision  
-
-Pharos Network’s mission is to **bridge TradFi and DeFi** by providing:  
-
-- **Ultra-High Throughput** (50k TPS, lesst than 1s block times) via its Pharos VM and parallel execution layers;  
-- **Institution-Grade RWA Support** with on-chain credit networks, zk-attested identities, and native tokenization pipelines;  
-- **Special Processing Networks (SPNs)** for customizable, low-latency environments tailored to payments, AI, HFT, and privacy use-cases;  
-- **EVM-Compatibility & Interoperability**, unlocking seamless migration of Ethereum dApps and tooling onto a truly Web3-native settlement layer 
-
----
 
 ## Payzoll Vision  
 
@@ -24,7 +12,9 @@ Payzoll unifies TradFi and DeFi into one **Web3-native financial umbrella**, off
 
 - **Secure Payments, Streams** transfer whatever you want to whoever you want;
 - **On-chain Payroll** with gas abstraction, multi-token payroll and real-time streaming;  
-- **Trustless P2P Transfers** with built-in recovery and dispute resolution;  
+- **Recoverable P2P Transfers** with built-in recovery and dispute resolution;  
+- **Invoice and Bills Payments** pay your bills and for your favourite services using tokens;
+- **SplitBills** friends are meant to support you, well make them pay splits in your bills;
 - **Fiat On/Off-Ramps** tightly integrated for seamless fiat-crypto flows;  
 - **AI-Driven Automation** agents for recurring disbursements and compliance checks;  
 - **zk-KYC & Anonymous Auth** for privacy-preserving, on-chain identity and data storage.  
@@ -33,13 +23,14 @@ Payzoll unifies TradFi and DeFi into one **Web3-native financial umbrella**, off
 ---
 
 ## Perfect Alignment  
+## Perfect Alignment  
 
-- **Inclusive Payment Rails**: Pharos’ sub-second finality and 50k TPS throughput power Payzoll’s gas-abstracted payroll and micro-streaming services at scale.
-- **RWA & Liquidity**: Pharos’ native RWA tooling and credit networks complement Payzoll’s tokenized payroll and stablecoin distributions, ensuring deep liquidity and compliance.
-- **Composable Superapps**: Leveraging SPNs and Pharos VM’s parallelism, Payzoll can modularly deploy payroll, streaming, compliance, analytics, and DAO governance under one unified ecosystem.
-- **TradFi-to-Web3 Convergence**: Both Pharos and Payzoll share a commitment to seamlessly onboard traditional finance into the blockchain era. Pharos delivers institutional-grade RWA tooling, on-chain credit networks, zk-attested identities, and ultra-high throughput settlement, while Payzoll provides fully compliant payroll, fiat on/off-ramps, KYC/AML workflows, and familiar UX abstractions—together creating an end-to-end migration path for banks, enterprises, and everyday users to adopt decentralized rails without compromising on performance, security, or regulatory requirements.
+- **Inclusive Payment Rails**: Sui's parallel execution and sub-second finality power Payzoll's gas-abstracted payroll and micro-streaming services at unprecedented scale.
+- **RWA & Liquidity**: Sui's object-centric data model and Move smart contracts enable Payzoll's tokenized payroll and stablecoin distributions with robust security and compliance.
+- **Composable Superapps**: Leveraging Sui's horizontal scalability and object-ownership model, Payzoll can modularly deploy payroll, streaming, compliance, analytics, and DAO governance as an integrated ecosystem.
+- **TradFi-to-Web3 Convergence**: Both Sui and Payzoll share a commitment to seamlessly onboard traditional finance into the blockchain era. Sui delivers institutional-grade performance, Move's advanced smart contract capabilities, developer-friendly frameworks, and high-throughput settlement, while Payzoll provides fully compliant payroll, fiat on/off-ramps, KYC/AML workflows, and familiar UX abstractions—together creating an end-to-end migration path for banks, enterprises, and everyday users to adopt decentralized rails without compromising on performance, security, or regulatory requirements.
 
-Together, Pharos and Payzoll drive **trustless innovation**, **financial inclusion**, and **mass adoption** by seamlessly connecting traditional finance rails with decentralized settlement, enabling real-world payroll, payments, and asset management at Internet scale.  
+Together, Sui and Payzoll drive **trustless innovation**, **financial inclusion**, and **mass adoption** by seamlessly connecting traditional finance rails with decentralized settlement, enabling real-world payroll, payments, and asset management with internet-scale performance.
 
 ---
 
@@ -55,8 +46,12 @@ Payzoll is a **fully modular Web3 payment infrastructure** built to meet the nee
 - **Streaming Payments** *(Upcoming)*  
   Real-time money flows for freelancers, DAOs, and distributed teams—no more batch cycles or waiting periods, just continuous value transfer whenever and wherever it’s needed.
 
-- **Secure P2P Transfers**  
+- **Recoverable P2P Transfers**  
   Trust-minimized, recoverable person-to-person transfers with built-in dispute resolution and recovery options, making peer payments reliable and user-friendly.
+
+- **Inovice and Bill Payments | Bill Splits** 
+  Pay for you favourite services and purchases using tokens, hassle free usage and instant convergence. Split subscriptions, bill, invoices among friends.
+ 
 
 - **Fiat On/Off-Ramps**  
   Seamless integration with banking rails and fiat bridges—move money in and out of crypto with a single click, backed by institutional liquidity and compliance.
@@ -78,7 +73,7 @@ Our ultimate mission is to onboard traditional businesses into Web3 without fric
    Instantly purchase stablecoins or native tokens directly through embedded fiat rails.
 
 2. **On-Chain Processing**  
-   Trigger payroll, streams, or P2P transfers via a simple dashboard or API call—no manual gas management needed.
+   Trigger payroll, streams, P2P transfers, Daily Payments via a simple dashboard or API call—no manual gas management needed.
 
 3. **Compliance & Reporting**  
    Built-in KYC/AML workflows and audit trails ensure you stay on the right side of regulations.
@@ -90,19 +85,65 @@ By abstracting complexity and unifying centralized and decentralized rails, Payz
 
 ---
 
-## Accomplishments
-
-- 🚀 **Multi-Mainnet Deployments**: Live on **BNB Chain**, **Arbitrum**, **Polygon**, and **Aptos**  
-- 👥 **Pilot Success**: Completed real-world payroll for **2 pilot users**  
-- 🏆 **Hackathon Victories**:  
-  - Winner – **ETHIndia Hackathon**  
-  - Winner – **BNB Chain Hackathon Q4**  
-  - Winner – **Stellar Build Hackathon**  
-- 🎓 **Incubation & Acceleration**: Selected for **EduChain OpenCampus** incubation program  
-- 🔄 **On-Chain Transactions**: Processed real P2P transfers and fiat offramp transactions on mainnet
-
 ![Data](public/PZ-NUM.png)
 ---
+
+## 🚀 SUI Overflow Deliverables
+
+During the SUI Overflow hackathon, we successfully migrated PayZoll's entire ecosystem to the Move programming language and SUI blockchain, delivering a comprehensive suite of enhanced features:
+
+1. **Move-Based Smart Contract Infrastructure**  
+  - **Complete language migration**: Converted all Solidity contracts to Move, leveraging SUI's object-centric model.  
+  - **SUI DPP Kit integration**: Built using SUI's developer platform kits for seamless deployment and interaction.  
+  - **Object-ownership model**: Reimagined our payment flows using SUI's unique ownership and capability patterns.  
+  - **Sub-second finality**: Leveraging SUI's parallel execution for instant payment confirmations and real-time streams.
+
+2. **Enhanced Recoverable Transfer Protocol**  
+  - **Time-locked escrow**: SUI-native escrow with programmable time locks for dispute resolution.  
+  - **Multi-signature recovery**: Enhanced recovery flow with social recovery options using SUI's signature schemes.  
+  - **Atomic transactions**: Leveraging SUI's transaction atomicity for safer P2P transfers and refunds.  
+  - **Dispute resolution framework**: On-chain arbitration system for contested transfers and recoveries.
+
+3. **Bill & Invoice Payment System**  
+  - **Invoice object creation**: Native SUI objects for invoice representation and state tracking.  
+  - **Bill splitting module**: Split expenses among multiple participants with automatic balance tracking.  
+  - **Subscription management**: Recurring payment objects with cancellation capabilities.  
+  - **Payment verification**: Cryptographically verifiable proof of payment for invoices and bills.
+
+4. **Client-Side Integration**  
+  - **SUI wallet connectors**: Complete integration with Slush.  
+  - **Transaction simulation**: Pre-flight checks and gas estimations using SUI's simulation capabilities.  
+  - **Object viewer**: Interactive UI for viewing and interacting with on-chain payment objects.  
+  - **Real-time transaction monitoring**: Live updates on transaction status using SUI's event system.
+
+5. **Ongoing & Upcoming SUI Enhancements**  
+  - **Move-based AI agents**: Specialized agents for auto-triggering payments and managing recurring transactions.  
+  - **Cross-chain bridges**: Connecting SUI payroll infrastructure with other supported chains.  
+  - **zkLogin integration**: Privacy-preserving authentication using SUI's zkLogin capabilities.  
+  - **Advanced object capabilities**: Leveraging SUI's extended object model for more complex payment flows.
+
+---
+
+With these SUI-specific enhancements, PayZoll has transformed into a true native SUI application, taking full advantage of Move's safety guarantees, SUI's object model, and the network's high-performance characteristics—creating an unparalleled financial infrastructure for the SUI ecosystem.
+
+## Development Journey
+
+After extensive evaluation of blockchain ecosystems in early 2024, we strategically selected SUI and Move as our primary development platform. Our technical assessment compared EVM-based solutions (Solidity), Rust frameworks, and Move language, with SUI emerging as the clear winner for our financial infrastructure needs
+
+Key factors that positioned SUI as optimal:
+- **Object-centric model**: Perfect alignment with financial assets and payment flows
+- **Move language**: Superior safety guarantees essential for financial applications
+- **Parallel execution**: Enabling the high throughput required for global payment systems
+- **Sub-second finality**: Critical for real-time financial transactions and streaming
+- **Advanced ownership model**: Foundational for our recoverable transfer protocol
+
+Our development timeline has been methodical and milestone-driven:
+- **Feb 2024**: Technical evaluation and architecture planning
+- **Mar 2024**: Core protocol design and SUI object model implementation
+- **Apr 2024**: Payment flows, recovery mechanics, and compliance framework
+- **May 2024**: Testing, optimization, and front-end integration
+
+This focused approach with SUI has allowed us to build a more robust, secure, and scalable infrastructure than would have been possible on alternative chains—positioning PayZoll at the forefront of Web3 financial innovation.
 
 ## 📈 Strategic Roadmap & Execution Plan
 
@@ -240,14 +281,19 @@ Our team combines deep expertise in blockchain technology and End to End product
 
 Cofounder @PayZoll | B.tech CSE from IIIT Guwahati | End to End Dev@ MERN/ Next, Nest , Blockchain Dev @solidity, move, rust | Contract Audit and Security | Lead Developer
 
+## Abhinav
+
+Cofounder @PayZoll | B.tech CSE from IIIT Guwahati | End to End Dev@ MERN/ Next, Nest, Blockchain Dev @solidity, move, rust | Contract Audit and Security | Lead Developer
+
 **Core Contributions & Timeline**  
 
-- **Q3 2024** – **Aptos Build**: Architected and shipped the Aptos integration module, including on-chain payroll contracts and multi-token support.  
-- **Q4 2024** – **Stellar Build**: Led development of the Stellar smart-contract suite (bulk transfers, multi-hop swaps) and front-end integration using Rust SDK & Freighter.  
-- **Q1 2025** – **Payroll & Offramp Protocols**: Designed and deployed the gasless payroll engine, complete fiat on/off-ramp flow, and backend services (Node.js + Express).  
-- **Ongoing** – **Full-Stack Development**: Overseeing Next.js + Tailwind frontend, NestJS APIs, smart-contract audits, and cross-chain orchestration.  
+- **Q3 2024** – **PayZoll Core Development**: Architected and implemented core protocols for Stellar, Sui, and Aptos blockchains, focusing on cross-chain compatibility and native features.
+- **Q1 2025** – **P2P Recovery Protocol**: Designed and built novel recoverable P2P transfer system with dispute resolution mechanisms and time-locked escrow capabilities.
+- **Q1 2025** – **Payment Streaming & Invoicing**: Developed real-time payment streaming infrastructure and complete invoice/bill payment system with splitting capabilities.
+- **Q2 2025** – **Smart Contract Migration**: Successfully migrated entire contract suite from Solidity to Move language, optimizing for SUI's object-centric model.
+- **Ongoing** – **Full-Stack Development**: Overseeing architecture across Move smart contracts, Next.js frontend, and NestJS backend services with security audits and gas optimizations.
 
-> **Tech Stack:** Solidity, Move, Rust, MERN (Next.js, React, Node.js), NestJS, Automations, Chainlink Oracles  
+> **Tech Stack:** Solidity, Move, Rust, MERN (Next.js, React, Node.js), NestJS, Automations, Contract Security, Multi-chain Development
 
 ## Vaibhav
 
@@ -299,7 +345,7 @@ Payzoll’s combination of zk-KYC for privacy-preserving compliance, AI-driven a
 
 ## Links & Demos
 
-- [Website](https://payzoll.xyz)
+- [Website](https://payzoll-sui.pages.dev)
 - [GitHub](https://github.com/PayZoll-Orgs)
 
 ## Contact Us
@@ -312,7 +358,7 @@ For project inquiries, partnership opportunities, or support, feel free to reach
 
 **Co-Founder & Lead Web3 & FullStack Engineer**  
 
-- Email: [abhinavpangaria2003@gmail.com](mailto:abhinavpangaria2003@gmail.com)  
+- Email: [abhinavpangaria2003@gmail.com](mailto:abhinav.pangaria22b@iiitg.ac.in)  
 - LinkedIn: [linkedin.com/in/abhinavpangaria](https://www.linkedin.com/in/abhinavpangaria)  
 - X (Twitter): [@18_r_y_u_k_07](https://x.com/18_r_y_u_k_07)  
 - Slack: [abhinavpangaria.slack.com](https://abhinavpangaria.slack.com/)  
@@ -324,13 +370,32 @@ For project inquiries, partnership opportunities, or support, feel free to reach
 
 **Lead Backend Engineer & P2P Architect**  
 
-- Email: [sarthakbansalog@gmail.com](mailto:sarthakbansalog@gmail.com)  
+- Email: [sarthakbansalog@gmail.com](mailto:sarthak.bansal22b@iiitg.ac.in)  
 - GitHub: [github.com/sarthakbansal7](https://github.com/sarthakbansal7)  
 - LinkedIn: [linkedin.com/in/sarthak-bansal-4b5539255](https://www.linkedin.com/in/sarthak-bansal-4b5539255/)  
 - X (Twitter): [@sarthakbansal75](https://x.com/sarthakbansal75)
 
 ---
 
+## 📝 Contract Deployments
+
+Our smart contracts are live and operational on both Sui Testnet and Mainnet networks. Below are the official deployed contract addresses for reference and integration:
+
+| Contract | Network | Address |
+|----------|---------|---------|
+| **Secure Transfer** | Mainnet | `0xe48836adecb638703f5444b2d26fefb729c967c9455334867c3f25a6edc7e610` |
+| **Secure Transfer** | Testnet | `0x5a9a6c0db570d796c0369cefc05a184fcd24541afa8986e392e6890a3472832d` |
+| **Bulk Payroll** | Mainnet | `0x777cae1b97c072eae268f19012120b979a28430ea12020bd294571cf94303593` |
+| **Bulk Payroll** | Testnet | `0xfbd9c32958b04d778001a21c2b512b8688e635120f03b22cf3ff6bada43f477c` |
+
+### Transaction History
+
+You can view our first mainnet transaction for the Bulk Payroll contract here:
+[View on SuiScan](https://suiscan.xyz/mainnet/object/0x777cae1b97c072eae268f19012120b979a28430ea12020bd294571cf94303593/tx-blocks)
+
+> Note: Always verify contract addresses through official channels before interacting with them.
+
+
 **Star us on GitHub** ⭐ | **Fork us** 🍴 | **Join the Revolution** 🚀
 
-*Empowering global payments infrastructure with the power of decentralized technology and Pharos robust ecosystem.*
+*Empowering global payments infrastructure with the power of decentralized technology and Sui's ecosystem.*
