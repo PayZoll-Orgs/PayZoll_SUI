@@ -65,7 +65,8 @@ export const createSplitBill = async (
             initiatorWalletAddress,
             ...splitBill.participants.map((p: SplitParticipant) => p.walletAddress)
         ],
-        amount: splitBill.totalAmount,
+        amounts: [splitBill.totalAmount || 0],
+        totalAmount: splitBill.totalAmount || 0,
         chain: 'SUI',
         status: 'created'
     });
@@ -120,7 +121,8 @@ export const updateParticipantPayment = async (
             recordId: splitBill._id,
             timestamp: Date.now(),
             walletAddresses: [participant.walletAddress],
-            amount: participant.amount,
+            amounts: [participant.amount || 0],
+            totalAmount: participant.amount || 0,
             chain: 'SUI',
             status: 'participant_paid',
             transactionHash

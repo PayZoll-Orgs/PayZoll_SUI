@@ -51,7 +51,8 @@ export const createInvoice = async (invoiceData: {
         recordId: response.data.data._id,
         timestamp: Date.now(),
         walletAddresses: [invoiceData.walletAddress || ''],
-        amount: invoiceData.amount,
+        amounts: [invoiceData.amount || 0],
+        totalAmount: invoiceData.amount || 0,
         chain: 'SUI',
         status: 'created'
     });
@@ -79,7 +80,8 @@ export const updateInvoiceStatus = async (
         recordId: invoiceId,
         timestamp: Date.now(),
         walletAddresses: [invoice.walletAddress],
-        amount: invoice.amount,
+        amounts: [invoice.amount],
+        totalAmount: invoice.amount,
         chain: 'SUI',
         status: paymentStatus,
         transactionHash
