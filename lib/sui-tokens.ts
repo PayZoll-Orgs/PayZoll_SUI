@@ -75,6 +75,7 @@ export const suiTokens: Record<string, SuiToken[]> = {
 export const bulkTransferModule = {
     mainnet: '0x777cae1b97c072eae268f19012120b979a28430ea12020bd294571cf94303593',
     testnet: '0xfbd9c32958b04d778001a21c2b512b8688e635120f03b22cf3ff6bada43f477c',
+    devnet: '0x'
 };
 
 // Helper to get explorer URL
@@ -82,6 +83,7 @@ export const getExplorerUrl = (network: string, txDigest: string): string => {
     const baseUrls: Record<string, string> = {
         mainnet: 'https://suiscan.xyz/mainnet/',
         testnet: 'https://suiscan.xyz/testnet/',
+        devnet: 'https://suiscan.xyz/devnet/',
     };
 
     return `${baseUrls[network]}/${txDigest}`;
