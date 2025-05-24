@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { suiNetworks, defaultNetwork } from '@/lib/sui-tokens';
 
-export type SuiNetwork = 'mainnet' | 'testnet';
+export type SuiNetwork = 'mainnet' | 'testnet' | 'devnet';
 
 type NetworkContextType = {
     currentNetwork: SuiNetwork;

@@ -3,7 +3,7 @@
 import { createNetworkConfig, SuiClientProvider, WalletProvider } from '@mysten/dapp-kit';
 import { getFullnodeUrl } from '@mysten/sui/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { NetworkProvider } from '@/context/networkContext';
+import { NetworkProvider, useNetwork } from '@/context/networkContext';
 import { AuroraBackground } from '@/components/ui/aurora';
 
 // Config options for the networks you want to connect to
@@ -15,8 +15,28 @@ const { networkConfig } = createNetworkConfig({
     devnet: { url: getFullnodeUrl('devnet') },
 });
 
-
 const queryClient = new QueryClient();
+
+// Inner component that uses the network context
+function SuiProviders({ children }: { children: React.ReactNode }) {
+    const { currentNetwork, setNetwork } = useNetwork();
+
+    return (
+        <SuiClientProvider
+            networks={networkConfig}
+            network={currentNetwork}
+            onNetworkChange={(network) => {
+                setNetwork(network as any);
+            }}
+        >
+            <WalletProvider slushWallet={{
+                name: 'PayZoll',
+            }}>
+                {children}
+            </WalletProvider>
+        </SuiClientProvider>
+    );
+}
 
 export default function PaymentsLayout({
     children,
@@ -28,13 +48,9 @@ export default function PaymentsLayout({
             <AuroraBackground>
                 <QueryClientProvider client={queryClient}>
                     <NetworkProvider>
-                        <SuiClientProvider networks={networkConfig} defaultNetwork='mainnet'>
-                            <WalletProvider slushWallet={{
-                                name: 'PayZoll',
-                            }}>
-                                {children}
-                            </WalletProvider>
-                        </SuiClientProvider>
+                        <SuiProviders>
+                            {children}
+                        </SuiProviders>
                     </NetworkProvider>
                 </QueryClientProvider>
             </AuroraBackground>
