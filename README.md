@@ -364,18 +364,6 @@ For project inquiries, partnership opportunities, or support, feel free to reach
 - Slack: [abhinavpangaria.slack.com](https://abhinavpangaria.slack.com/)  
 - Portfolio: [abhinav-pangaria.vercel.app](https://abhinav-pangaria.vercel.app/)
 
----
-
-### **Sarthak Bansal**  
-
-**Lead Backend Engineer & P2P Architect**  
-
-- Email: [sarthakbansalog@gmail.com](mailto:sarthak.bansal22b@iiitg.ac.in)  
-- GitHub: [github.com/sarthakbansal7](https://github.com/sarthakbansal7)  
-- LinkedIn: [linkedin.com/in/sarthak-bansal-4b5539255](https://www.linkedin.com/in/sarthak-bansal-4b5539255/)  
-- X (Twitter): [@sarthakbansal75](https://x.com/sarthakbansal75)
-
----
 
 ## 📝 Contract Deployments
 
