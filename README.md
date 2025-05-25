@@ -279,10 +279,6 @@ Our team combines deep expertise in blockchain technology and End to End product
 
 ## Abhinav
 
-Cofounder @PayZoll | B.tech CSE from IIIT Guwahati | End to End Dev@ MERN/ Next, Nest , Blockchain Dev @solidity, move, rust | Contract Audit and Security | Lead Developer
-
-## Abhinav
-
 Cofounder @PayZoll | B.tech CSE from IIIT Guwahati | End to End Dev@ MERN/ Next, Nest, Blockchain Dev @solidity, move, rust | Contract Audit and Security | Lead Developer
 
 **Core Contributions & Timeline**  
